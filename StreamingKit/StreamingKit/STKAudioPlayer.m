@@ -750,9 +750,19 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
 	[self playURL:url withQueueItemID:url];
 }
 
+- (void)playURL:(NSURL*)url withQueueItemID:(NSObject*)queueItemId initialTimeOffset:(double)initialTimeOffset {
+    
+    [self setDataSource:[STKAudioPlayer dataSourceFromURL:url] withQueueItemId:queueItemId initialTimeOffset:initialTimeOffset];
+}
+
 -(void) playURL:(NSURL*)url withQueueItemID:(NSObject*)queueItemId
 {
-	[self setDataSource:[STKAudioPlayer dataSourceFromURL:url] withQueueItemId:queueItemId];
+    [self setDataSource:[STKAudioPlayer dataSourceFromURL:url] withQueueItemId:queueItemId];
+}
+
+-(void) playDataSource:(STKDataSource *)dataSource withQueueItemID:(NSObject*)queueItemId initialTimeOffset:(double)initialTimeOffset {
+    
+    [self setDataSource:dataSource withQueueItemId:queueItemId initialTimeOffset:initialTimeOffset];
 }
 
 -(void) playDataSource:(STKDataSource*)dataSource
@@ -767,18 +777,25 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
 
 -(void) setDataSource:(STKDataSource*)dataSourceIn withQueueItemId:(NSObject*)queueItemId
 {
+    [self setDataSource:dataSourceIn withQueueItemId:queueItemId initialTimeOffset:0];
+}
+
+-(void) setDataSource:(STKDataSource*)dataSourceIn withQueueItemId:(NSObject*)queueItemId initialTimeOffset:(double)initialTimeOffset
+{
     pthread_mutex_lock(&playerMutex);
     {
         LOGINFO(([NSString stringWithFormat:@"Playing: %@", [queueItemId description]]));
         
-		if (![self audioGraphIsRunning])
-		{
-			[self startSystemBackgroundTask];
-		}
+        if (![self audioGraphIsRunning])
+        {
+            [self startSystemBackgroundTask];
+        }
         
         [self clearQueue];
-
-        [upcomingQueue enqueue:[[STKQueueEntry alloc] initWithDataSource:dataSourceIn andQueueItemId:queueItemId]];
+        
+        STKQueueEntry *queueEntry = [[STKQueueEntry alloc] initWithDataSource:dataSourceIn andQueueItemId:queueItemId];
+        queueEntry.initialTimeOffset = initialTimeOffset;
+        [upcomingQueue enqueue:queueEntry];
         
         self.internalState = STKAudioPlayerInternalStatePendingNext;
     }

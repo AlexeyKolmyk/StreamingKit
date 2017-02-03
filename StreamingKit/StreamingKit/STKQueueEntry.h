@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (readonly) UInt64 audioDataLengthInBytes;
+@property (readwrite) double initialTimeOffset;
 @property (readwrite, retain) NSObject* queueItemId;
 @property (readwrite, retain) STKDataSource* dataSource;
 

@@ -148,6 +148,10 @@ typedef void(^STKFrameFilter)(UInt32 channelsPerFrame, UInt32 bytesPerFrame, UIn
 @property (readonly) double duration;
 /// Gets the current item progress in seconds
 @property (readonly) double progress;
+/// Gets or sets the playback rate (default is 1.0)
+@property(readwrite) float rate;
+// Gets or sets the playback overlap (default is 8.0)
+@property(readwrite) float overlap;
 /// Enables or disables peak and average decibel meteting
 @property (readwrite) BOOL meteringEnabled;
 /// Enables or disables the EQ
@@ -195,7 +199,7 @@ typedef void(^STKFrameFilter)(UInt32 channelsPerFrame, UInt32 bytesPerFrame, UIn
 - (void)playURL:(NSURL*)url withQueueItemID:(NSObject*)queueItemId initialTimeOffset:(double)initialTimeOffset;
 
 /// Plays an item from the given URL (all pending queued items are removed)
--(void) playURL:(NSURL*)url withQueueItemID:(NSObject*)queueItemId;
+- (void)playURL:(NSURL*)url withQueueItemID:(NSObject*)queueItemId initialTimeOffset:(double)initialTimeOffset;
 
 /// Plays the given item (all pending queued items are removed)
 /// The STKDataSource is used as the queue item ID
@@ -203,7 +207,7 @@ typedef void(^STKFrameFilter)(UInt32 channelsPerFrame, UInt32 bytesPerFrame, UIn
 -(void) playDataSource:(STKDataSource *)dataSource withQueueItemID:(NSObject*)queueItemId initialTimeOffset:(double)initialTimeOffset;
 
 /// Plays the given item (all pending queued items are removed)
--(void) playDataSource:(STKDataSource*)dataSource withQueueItemID:(NSObject*)queueItemId;
+-(void) playDataSource:(STKDataSource *)dataSource withQueueItemID:(NSObject*)queueItemId initialTimeOffset:(double)initialTimeOffset;
 
 /// Queues the URL string for playback and uses the NSString as the queueItemID
 -(void) queue:(NSString*)urlString;

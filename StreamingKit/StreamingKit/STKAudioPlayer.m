@@ -1390,6 +1390,7 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
             
             [self setCurrentlyReadingEntry:entry andStartPlaying:YES];
             [self resetPcmBuffers];
+            [self seekToTime:entry.initialTimeOffset];
         }
         else if (seekToTimeWasRequested && currentlyPlayingEntry && currentlyPlayingEntry != currentlyReadingEntry)
         {

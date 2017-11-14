@@ -43,17 +43,17 @@
     double retval;
     
     if (packetDuration > 0)
-	{
-		if (processedPacketsCount > STK_BIT_RATE_ESTIMATION_MIN_PACKETS_PREFERRED || (audioStreamBasicDescription.mBytesPerFrame == 0 && processedPacketsCount > STK_BIT_RATE_ESTIMATION_MIN_PACKETS_MIN))
-		{
-			double averagePacketByteSize = (double)processedPacketsSizeTotal / (double)processedPacketsCount;
-			
-			retval = averagePacketByteSize / packetDuration * 8;
-			
-			return retval;
-		}
-	}
-	
+    {
+        if (processedPacketsCount > STK_BIT_RATE_ESTIMATION_MIN_PACKETS_PREFERRED || (audioStreamBasicDescription.mBytesPerFrame == 0 && processedPacketsCount > STK_BIT_RATE_ESTIMATION_MIN_PACKETS_MIN))
+        {
+            double averagePacketByteSize = (double)processedPacketsSizeTotal / (double)processedPacketsCount;
+            
+            retval = averagePacketByteSize / packetDuration * 8;
+            
+            return retval;
+        }
+    }
+    
     retval = (audioStreamBasicDescription.mBytesPerFrame * audioStreamBasicDescription.mSampleRate) * 8;
     
     return retval;
@@ -110,7 +110,7 @@
 -(Float64) progressInFrames
 {
     OSSpinLockLock(&self->spinLock);
-    Float64 retval = (self->seekTime + self->audioStreamBasicDescription.mSampleRate) + self->framesPlayed;
+    Float64 retval = (self->seekTime * self->audioStreamBasicDescription.mSampleRate) + self->framesPlayed;
     OSSpinLockUnlock(&self->spinLock);
     
     return retval;

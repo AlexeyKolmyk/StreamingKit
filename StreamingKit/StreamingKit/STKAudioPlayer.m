@@ -1258,10 +1258,10 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
         
         if (!isPlayingSameItemProbablySeek && entry)
         {
-            [self playbackThreadQueueMainThreadSyncBlock:^
-            {
+//            [self playbackThreadQueueMainThreadSyncBlock:^
+//            {
                 [self.delegate audioPlayer:self didFinishPlayingQueueItemId:queueItemId withReason:stopReason andProgress:progress andDuration:duration];
-            }];
+//            }];
         }
         
         if (!isPlayingSameItemProbablySeek)
@@ -1282,10 +1282,10 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
         
         if (!isPlayingSameItemProbablySeek && entry)
         {
-            [self playbackThreadQueueMainThreadSyncBlock:^
-            {
+//            [self playbackThreadQueueMainThreadSyncBlock:^
+//            {
 				[self.delegate audioPlayer:self didFinishPlayingQueueItemId:queueItemId withReason:stopReason andProgress:progress andDuration:duration];
-            }];
+//            }];
         }
     }
     

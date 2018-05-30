@@ -1605,7 +1605,6 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
     
     if (read == 0)
     {
-        [self dataSourceEof:currentlyPlayingEntry.dataSource];
         return;
     }
     

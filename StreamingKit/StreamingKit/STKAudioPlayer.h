@@ -182,6 +182,12 @@ typedef void(^STKFrameFilter)(UInt32 channelsPerFrame, UInt32 bytesPerFrame, UIn
 /// URLs with unrecognised schemes will return nil.
 +(STKDataSource*) dataSourceFromURL:(NSURL*)url;
 
+/// Creates a datasource from a given URL and http headers.
+/// URLs with FILE schemes will return an STKLocalFileDataSource.
+/// URLs with HTTP schemes will return an STKHTTPDataSource wrapped within an STKAutoRecoveringHTTPDataSource.
+/// URLs with unrecognised schemes will return nil.
++(STKDataSource*) dataSourceFromURL:(NSURL*)url httpRequestHeaders:(nullable NSDictionary*)httpRequestHeaders;
+
 /// Initializes a new STKAudioPlayer with the default options
 -(instancetype) init;
 

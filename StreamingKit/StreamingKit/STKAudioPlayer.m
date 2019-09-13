@@ -678,6 +678,11 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
 
 +(STKDataSource*) dataSourceFromURL:(NSURL*)url
 {
+    return [self dataSourceFromURL:url httpRequestHeaders:nil];
+}
+
++(STKDataSource*) dataSourceFromURL:(NSURL*)url httpRequestHeaders:(nullable NSDictionary*)httpRequestHeaders
+{
     STKDataSource* retval = nil;
     
     if ([url.scheme isEqualToString:@"file"])
@@ -686,7 +691,7 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
     }
     else if ([url.scheme caseInsensitiveCompare:@"http"] == NSOrderedSame || [url.scheme caseInsensitiveCompare:@"https"] == NSOrderedSame)
     {
-        retval = [[STKAutoRecoveringHTTPDataSource alloc] initWithHTTPDataSource:[[STKHTTPDataSource alloc] initWithURL:url]];
+        retval = [[STKAutoRecoveringHTTPDataSource alloc] initWithHTTPDataSource:[[STKHTTPDataSource alloc] initWithURL:url httpRequestHeaders:httpRequestHeaders]];
     }
     
     return retval;

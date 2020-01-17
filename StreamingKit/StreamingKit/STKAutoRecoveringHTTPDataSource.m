@@ -379,6 +379,10 @@ static void PopulateOptionsWithDefault(STKAutoRecoveringHTTPDataSourceOptions* o
     {
         [super dataSourceEof:dataSource];
     }
+    else if (self.innerDataSource.httpStatusCode == 404)
+    {
+        [super dataSourceErrorOccured:dataSource];
+    }
     else
     {
         [self processRetryOnError];

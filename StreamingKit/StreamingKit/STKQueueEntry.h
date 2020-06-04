@@ -42,7 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void) reset;
 -(double) duration;
--(Float64) progressInFrames;
 -(double) calculatedBitRate;
 -(BOOL) isDefinitelyCompatible:(AudioStreamBasicDescription*)basicDescription;
 

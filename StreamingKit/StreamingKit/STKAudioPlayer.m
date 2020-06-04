@@ -1764,6 +1764,20 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
                 }
             }
             
+            if (playbackRateUnit)
+            {
+                error = AudioUnitReset(playbackRateUnit, kAudioUnitScope_Global, 0);
+               
+                if (error)
+                {
+                    [self unexpectedError:STKAudioPlayerErrorAudioSystemError];
+                   
+                    pthread_mutex_unlock(&playerMutex);
+                   
+                    return;
+                }
+            }
+            
             [self wakeupPlaybackThread];
         }
     }
@@ -2518,6 +2532,16 @@ static BOOL GetHardwareCodecClassDesc(UInt32 formatId, AudioClassDescription* cl
         self.internalState = STKAudioPlayerInternalStateStopped;
         
         return;
+    }
+    
+    if (playbackRateUnit)
+    {
+        status = AudioUnitReset(playbackRateUnit, kAudioUnitScope_Global, 0);
+        
+        if (status)
+        {
+            [self unexpectedError:STKAudioPlayerErrorAudioSystemError];
+        }
     }
     
     Boolean isRunning;

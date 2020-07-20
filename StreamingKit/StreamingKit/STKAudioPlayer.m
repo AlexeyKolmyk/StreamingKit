@@ -156,7 +156,7 @@ typedef enum
     STKAudioPlayerInternalStateWaitingForDataAfterSeek = (1 << 5) | STKAudioPlayerInternalStateRunning,
     STKAudioPlayerInternalStatePaused = (1 << 6) | STKAudioPlayerInternalStateRunning,
     STKAudioPlayerInternalStateStopped = (1 << 9),
-    STKAudioPlayerInternalStatePendingNext = (1 << 10),
+    STKAudioPlayerInternalStatePendingNext = (1 << 10) | STKAudioPlayerInternalStateRunning,
     STKAudioPlayerInternalStateDisposed = (1 << 30),
     STKAudioPlayerInternalStateError = (1 << 31)
 }
